@@ -1,4 +1,5 @@
 const socket = io({
+    transports: ['websocket'],
     reconnection: true,
     reconnectionAttempts: Infinity,
     reconnectionDelay: 1000,
