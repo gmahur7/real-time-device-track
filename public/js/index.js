@@ -1,13 +1,11 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // Initialize socket with server URL
-    const socket = io('https://realtime-device-track-gamma.vercel.app/.com', {
-      transports: ['websocket'],
-      reconnection: true,
-      reconnectionAttempts: Infinity,
-      reconnectionDelay: 1000,
-      reconnectionDelayMax: 5000,
-      timeout: 20000,
-    });
+const socket = io({
+    transports: ['websocket'],
+    reconnection: true,
+    reconnectionAttempts: Infinity,
+    reconnectionDelay: 1000,
+    reconnectionDelayMax: 5000,
+    timeout: 20000,
+  });
 
   socket.on('connect', () => {
     console.log('Connected to server with ID:', socket.id);
