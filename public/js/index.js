@@ -1,5 +1,5 @@
-const socket = io({
-    transports: ['websocket'],
+const socket = io('https://realtime-device-track-gamma.vercel.app',{
+    transports: ['websocket', 'polling'],
     reconnection: true,
     reconnectionAttempts: Infinity,
     reconnectionDelay: 1000,
