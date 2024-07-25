@@ -1,5 +1,8 @@
+require('dotenv').config;
 const express = require('express');
 const app= express();
+
+const port = process.env.PORT || 7500;
 
 const http = require('http');
 const path = require('path');
@@ -28,6 +31,6 @@ app.get("/",(req,resp)=>{
     resp.render("index")
 })
 
-server.listen(8000,()=>{
-    console.log("Server is running @ 8000")
+server.listen(port,()=>{
+    console.log("Server is running @ ",port)
 })
