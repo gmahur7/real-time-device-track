@@ -1,4 +1,14 @@
-const socket = io();
+const socket = io({
+    reconnection: true,
+    reconnectionAttempts: Infinity,
+    reconnectionDelay: 1000,
+    reconnectionDelayMax: 5000,
+    timeout: 20000,
+  });
+
+  socket.on('connect', () => {
+    console.log('Connected to server with ID:', socket.id);
+  });
 
 if (navigator.geolocation) {
     navigator.geolocation.watchPosition(
@@ -30,6 +40,7 @@ const markers = {
 }
 
 socket.on("recieve-location",(data)=>{
+    console.log('Location received:', data);
     const {id,latitude,longitude} =data;
     map.setView([latitude,longitude],16)
     if(markers[id]){
@@ -46,3 +57,7 @@ socket.on("user-disconnected",((id)=>{
         delete markers[id]
     }
 }))
+
+socket.on('disconnect', () => {
+    console.log('Disconnected from server');
+  });

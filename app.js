@@ -8,14 +8,22 @@ const http = require('http');
 const path = require('path');
 const socketio = require("socket.io");
 const server = http.createServer(app);
-const io=socketio(server);
+const io = socketio(server, {
+    cors: {
+      origin: '*',
+      methods: ['GET', 'POST'],
+    },
+  });
 
 app.set("view engine","ejs");
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname,"public")))
 
 io.on("connection",(socket)=>{
+    console.log('New client connected:', socket.id);
+
     socket.on("send-location",(data)=>{
+        console.log('Location data received from:', socket.id);
         io.emit("recieve-location",{
             id:socket.id,
             ...data
@@ -24,6 +32,7 @@ io.on("connection",(socket)=>{
     console.log("connected")
 
     socket.on("disconnect",()=>{
+        console.log('Client disconnected:', socket.id);
         io.emit("user-disconnected",{id:socket.id})
     })
 })
