@@ -1,14 +1,29 @@
-const socket = io({
-    transports: ['websocket'],
-    reconnection: true,
-    reconnectionAttempts: Infinity,
-    reconnectionDelay: 1000,
-    reconnectionDelayMax: 5000,
-    timeout: 20000,
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize socket with server URL
+    const socket = io('https://realtime-device-track-gamma.vercel.app/.com', {
+      transports: ['websocket'],
+      reconnection: true,
+      reconnectionAttempts: Infinity,
+      reconnectionDelay: 1000,
+      reconnectionDelayMax: 5000,
+      timeout: 20000,
+    });
+
+  socket.on('connect', () => {
+    console.log('Connected to server with ID:', socket.id);
   });
 
   socket.on('connect', () => {
     console.log('Connected to server with ID:', socket.id);
+  });
+
+  // Handle WebSocket errors
+  socket.on('connect_error', (error) => {
+    console.error('WebSocket connection error:', error);
+  });
+
+  socket.on('connect_timeout', () => {
+    console.error('WebSocket connection timed out');
   });
 
 if (navigator.geolocation) {
