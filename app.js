@@ -11,6 +11,7 @@ const server = http.createServer(app);
 const io=socketio(server);
 
 app.set("view engine","ejs");
+app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname,"public")))
 
 io.on("connection",(socket)=>{
@@ -28,7 +29,7 @@ io.on("connection",(socket)=>{
 })
 
 app.get("/",(req,resp)=>{
-    resp.render("index")
+    resp.render("index",{ title: 'Welcome' })
 })
 
 server.listen(port,()=>{
